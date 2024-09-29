@@ -10,17 +10,24 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install pipenv for managing Python dependencies
-RUN pip install pipenv
-
 # Clone the Bobber repository
 RUN git clone https://github.com/Flangvik/Bobber.git .
 
-# Install dependencies from Pipfile (if Pipfile exists)
-RUN pipenv install --deploy --ignore-pipfile
+# Install the required Python modules
+RUN pip install \
+    colorama==0.4.6 \
+    paramiko==3.3.1 \
+    Requests==2.31.0 \
+    roadlib==0.19.1 \
+    roadrecon==1.1.4 \
+    roadtools==0.0.1 \
+    roadtx==1.4.3 \
+    selenium==4.14.0 \
+    selenium_wire==5.1.0 \
+    blinker==1.7.0
 
 # Expose any necessary ports (customize based on Bobber's requirements)
-EXPOSE 8080
+#EXPOSE 8080
 
 # Set the entrypoint or command to run the Bobber tool (modify according to its usage)
-CMD ["pipenv", "run", "python", "bobber.py"]
+CMD ["python", "bobber.py"]
