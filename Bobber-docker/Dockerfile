@@ -12,7 +12,8 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Clone the Bobber repository
-RUN git clone https://github.com/Flangvik/Bobber.git .
+# RUN git clone https://github.com/Flangvik/Bobber.git .
+# Add bobber_modified to image instead of actual Bobber; Add the Bobber Repo as possible back up.
 
 # Install the required Python modules
 RUN pip install \
