@@ -16,18 +16,6 @@ services:
       - ./app/phishlets:/app/phishlets
     stdin_open: true
     tty: true
-    
-  graphrunner:
-    image: graphrunner  # .NET runtime for GraphRunner
-    container_name: graphrunner
-    volumes:
-      - shared-data:/shared-data  # Shared volume
-    networks:
-      - mynetwork
-    working_dir: /app
-    command: /bin/bash -c "git clone https://github.com/dafthack/GraphRunner.git && cd GraphRunner && dotnet run"
-    depends_on:
-      - evilginx2
 
   bobber:
     image: ubuntu:latest  # Ubuntu base image for Bobber
@@ -37,7 +25,20 @@ services:
     networks:
       - mynetwork
     working_dir: /app
-    command: /bin/bash -c "git clone https://github.com/Flangvik/Bobber.git && cd Bobber && ./run.sh"
+    command: /bin/bash -c "git clone https://github.com/Flangvik/Bobber.git && cd Bobber && ./bobber.py"
+    depends_on:
+      - evilginx2
+
+  graphrunner:
+    image: graphrunner  # .NET runtime for GraphRunner
+    container_name: graphrunner
+    volumes:
+      - shared-data:/shared-data  # Shared volume
+    networks:
+      - mynetwork
+    working_dir: /app
+    command: /bin/bash -c "git clone https://github.com/dafthack/GraphRunner.git && cd GraphRunner && dotnet run"
+    #command: "Import-Module .\GraphRunner.ps1"
     depends_on:
       - evilginx2
 
