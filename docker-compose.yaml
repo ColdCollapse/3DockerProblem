@@ -31,7 +31,7 @@ services:
     networks:
       - mynetwork
     working_dir: /app
-    command: /bin/bash -c "git clone https://github.com/Flangvik/Bobber.git && cd Bobber && ./bobber.py"
+    #command: /bin/bash -c "git clone https://github.com/Flangvik/Bobber.git && cd Bobber && ./bobber.py"
     depends_on:
       - evilginx2
 
@@ -46,7 +46,7 @@ services:
     networks:
       - mynetwork
     working_dir: /app
-    command: /bin/bash -c "git clone https://github.com/dafthack/GraphRunner.git && cd GraphRunner && dotnet run"
+    #command: /bin/bash -c "git clone https://github.com/dafthack/GraphRunner.git && cd GraphRunner && dotnet run"
     #command: "Import-Module .\GraphRunner.ps1"
     depends_on:
       - evilginx2
