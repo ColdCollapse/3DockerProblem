@@ -15,6 +15,8 @@ RUN apt-get update && apt-get install -y \
 # RUN git clone https://github.com/Flangvik/Bobber.git .
 # Add bobber_modified to image instead of actual Bobber; Add the Bobber Repo as possible back up.
 
+#To Do: Add 3DP_Bobber.py to image.
+
 # Install the required Python modules
 RUN pip install \
     colorama==0.4.6 \
