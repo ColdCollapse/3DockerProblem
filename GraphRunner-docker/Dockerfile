@@ -12,6 +12,8 @@ RUN apt-get update && \
     apt-get update && \
     apt-get install -y powershell && \
     apt-get clean
+    
+# Add Graphgrabber.sh to image.
 
 # Install necessary PowerShell modules
 RUN pwsh -Command "Install-Module -Name Az -Force -AllowClobber -Scope AllUsers"
