@@ -32,7 +32,6 @@ services:
       - mynetwork
     working_dir: /app
     command: ["/bin/sh", "-c", "mkdir -p /shared-data/fresh-data /shared-data/used-data"]
-    #command: /bin/bash -c "git clone https://github.com/Flangvik/Bobber.git && cd Bobber && ./bobber.py"
     depends_on:
       - evilginx2
 
