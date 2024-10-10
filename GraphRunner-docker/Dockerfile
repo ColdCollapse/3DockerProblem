@@ -16,11 +16,11 @@ RUN apt-get update && \
 # Install necessary PowerShell modules
 RUN pwsh -Command "Install-Module -Name Az -Force -AllowClobber -Scope AllUsers"
 
-# Download GraphRunner.ps1 from the GitHub repository
-ADD https://raw.githubusercontent.com/dafthack/GraphRunner/main/GraphRunner.ps1 /app/GraphRunner.ps1
+# Clone the entire GraphRunner repository from GitHub
+RUN git clone https://github.com/dafthack/GraphRunner /app/GraphRunner
 
-# Ensure the script is executable
-RUN chmod +x /app/GraphRunner.ps1
+# Ensure all scripts in the repository are executable
+RUN chmod -R +x /app/GraphRunner
 
-# Set the default command to run GraphRunner.ps1 with PowerShell
-CMD ["pwsh", "-File", "/app/GraphRunner.ps1"]
+# Set the default command to run the main GraphRunner.ps1 script with PowerShell
+CMD ["pwsh", "-File", "/app/GraphRunner/GraphRunner.ps1"]
