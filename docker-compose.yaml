@@ -10,13 +10,16 @@ services:
       - 80:80/tcp
       - 443:443/tcp
       - 53:53/udp
-    command: ["/bin/bash"]
-    #command: ["/bin/evilginx", "-p", "/app/phishlets", "-debug", "-developer"]
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
       - ./app/:/root/.evilginx
       - ./app/phishlets:/app/phishlets
+      - shared-data:/shared-data  # Shared volume
+    command: ["/bin/sh", "-c", "mkdir -p /shared-data/fresh-data /shared-data/used-data"]
+    #command: ["/bin/bash"]
+    #command: ["/bin/evilginx", "-p", "/app/phishlets", "-debug", "-developer"]
+    
     stdin_open: true
     tty: true
     
@@ -31,7 +34,7 @@ services:
     networks:
       - mynetwork
     working_dir: /app
-    command: ["/bin/sh", "-c", "mkdir -p /shared-data/fresh-data /shared-data/used-data"]
+    #command: ["/bin/sh", "-c", "mkdir -p /shared-data/fresh-data /shared-data/used-data"]
     depends_on:
       - evilginx2
 
