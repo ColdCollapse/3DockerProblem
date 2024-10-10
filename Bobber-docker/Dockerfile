@@ -1,5 +1,5 @@
 # Base image
-FROM python:3.9-slim
+FROM ubuntu/python
 
 # Set working directory
 WORKDIR /app
