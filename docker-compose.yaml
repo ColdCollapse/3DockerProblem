@@ -16,7 +16,7 @@ services:
       - ./app/:/root/.evilginx
       - ./app/phishlets:/app/phishlets
       - shared-data:/shared-data  # Shared volume
-    command: ["/bin/sh", "-c", "mkdir -p /shared-data/fresh-data /shared-data/used-data"]
+    command: ["/bin/sh", "-c", "mkdir -p /shared-data/EG2_DB /shared-data/fresh-data /shared-data/used-data"]
     #command: ["/bin/bash"]
     #command: ["/bin/evilginx", "-p", "/app/phishlets", "-debug", "-developer"]
     
