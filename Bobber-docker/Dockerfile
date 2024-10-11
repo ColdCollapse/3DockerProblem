@@ -34,4 +34,4 @@ RUN pip install \
 #EXPOSE 8080
 
 # Set the entrypoint or command to run the Bobber tool (modify according to its usage)
-CMD ["python", "bobber.py"]
+CMD ["python", "3DP_bobber.py"]
