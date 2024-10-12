@@ -33,5 +33,8 @@ RUN pip install \
 # Expose any necessary ports (customize based on Bobber's requirements)
 #EXPOSE 8080
 
+# Add config.json from the parent directory
+COPY ../config.json /app/config.json
+
 # Set the entrypoint or command to run the Bobber tool (modify according to its usage)
 CMD ["python", "3DP_bobber.py"]
