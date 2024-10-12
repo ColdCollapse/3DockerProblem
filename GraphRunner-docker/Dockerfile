@@ -24,5 +24,11 @@ RUN git clone https://github.com/dafthack/GraphRunner /app/GraphRunner
 # Ensure all scripts in the repository are executable
 RUN chmod -R +x /app/GraphRunner 
 
+# Add config.json from the parent directory
+COPY ../config.json /app/config.json
+
+# Add config.json from the parent directory
+COPY /GraphGrabber.sh /app/GraphGrabber.sh
+
 # Set the default command to run the main GraphRunner.ps1 script with PowerShell
 CMD ["pwsh", "-File", "/app/GraphRunner/GraphRunner.ps1"]
