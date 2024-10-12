@@ -1,0 +1,12 @@
+{"EvilGinx2": 
+  {"SSL_Key_Path":""},
+  {"SSL_CRT_Path": ""}
+"Bobber":
+  {"Opsgenie API Key":"",
+  "Remote": "True or False",
+  "Host_IP":"",
+  "SSH_User": "",
+  "SSH_Pwd":""
+  },
+"GraphRunner":
+  {}}
