@@ -1,5 +1,3 @@
-#Copied from https://github.com/froyo75/docker-evilginx2/blob/main/Dockerfile by froyo75. Great job mate, soz for taking it.
-
 ARG EVILGINX_BIN="/bin/evilginx"
 
 # Stage 1 - Build EvilGinx2 app
