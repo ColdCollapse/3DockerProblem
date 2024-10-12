@@ -1,6 +1,7 @@
 {"EvilGinx2": 
-  {"SSL_Key_Path":""},
-  {"SSL_CRT_Path": ""}
+  {"SSL_Key_Path":"",
+  "SSL_CRT_Path": ""
+  }
 "Bobber":
   {"Opsgenie API Key":"",
   "Remote": "True or False",
