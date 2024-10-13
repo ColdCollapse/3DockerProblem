@@ -1,5 +1,7 @@
 {"EvilGinx2": 
-  {"SSL_Key_Path":"",
+  {"Domain_Name":"",
+  "Host_IP": "",
+  "SSL_Key_Path":"",
   "SSL_CRT_Path": ""
   }
 "Bobber":
