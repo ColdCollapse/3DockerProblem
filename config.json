@@ -2,8 +2,10 @@
   {"Domain_Name":"",
   "Host_IP": "",
   "SSL_Key_Path":"",
-  "SSL_CRT_Path": ""
-  }
+  "SSL_CRT_Path": "",
+  "default_phishlet":"o365",
+  "default_redirect":"https://portal.office.com"
+  },
 "Bobber":
   {"Opsgenie API Key":"",
   "Remote": "True or False",
