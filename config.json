@@ -7,11 +7,12 @@
   "default_redirect":"https://portal.office.com"
   },
 "Bobber":
-  {"Opsgenie API Key":"",
-  "Remote": "True or False",
+  {"Remote": "True or False",
   "Host_IP":"",
   "SSH_User": "",
   "SSH_Pwd":""
   },
 "GraphRunner":
-  {"Exfil":""}}
+  {"Exfil":""},
+"Opsgenie_API_Key": ""
+}
