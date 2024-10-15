@@ -1,6 +1,7 @@
 {"EvilGinx2": 
   {"Domain_Name":"",
   "Host_IP": "",
+  "Phishlet_Path":"",
   "SSL_Key_Path":"",
   "SSL_CRT_Path": "",
   "default_phishlet":"o365",
