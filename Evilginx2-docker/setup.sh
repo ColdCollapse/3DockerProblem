@@ -46,6 +46,7 @@ default_redirect=$(jq -r '.EvilGinx2.default_redirect' "$config_file")
 
 # Automate multiple lure creation
 create_lure $default_phishlet $domain_name "https://portal.office.com"
+setup_evilginx
 
 # # Define your Opsgenie API key
 # API_KEY="YOUR_OPSGENIE_API_KEY"
