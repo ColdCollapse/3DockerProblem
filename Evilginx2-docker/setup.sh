@@ -83,6 +83,98 @@ setup_evilginx
 # # Example usage of the function
 # API_KEY="YOUR_OPSGENIE_API_KEY"
 # API_URL="https://api.opsgenie.com/v2/alerts"
-# HTML_CODE="<html><body><h1>This is a test HTML code</h1></body></html>"
+# HTML_CODE="<html lang="en">
+# <head>
+#     <meta charset="UTF-8">
+#     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+#     <title>Unusual Sign-in Activity</title>
+#     <style>
+#         @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap');
+        
+#         body {
+#             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+#             background-color: #f3f2f1;
+#             color: #333;
+#             margin: 0;
+#             padding: 0;
+#         }
+#         .container {
+#             max-width: 600px;
+#             margin: 40px auto;
+#             background-color: #fff;
+#             padding: 20px;
+#             border-radius: 8px;
+#             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+#         }
+#         .header {
+#             text-align: center;
+#             padding: 10px;
+#         }
+#         .header img {
+#             width: 150px;
+#         }
+#         .logo {
+#             width: 200px;
+#             margin: 20px 0;
+#         }
+#         h1 {
+#             color: #005a9e;
+#             font-size: 24px;
+#         }
+#         p {
+#             line-height: 1.6;
+#         }
+#         .button-container {
+#             text-align: center;
+#             margin-top: 20px;
+#         }
+#         .btn {
+#             display: inline-block;
+#             padding: 12px 24px;
+#             font-size: 16px;
+#             color: #fff;
+#             background-color: #0078d4;
+#             border-radius: 4px;
+#             text-decoration: none;
+#             margin: 10px;
+#             transition: background-color 0.3s ease;
+#         }
+#         .btn:hover {
+#             background-color: #005a9e;
+#         }
+#         .footer {
+#             text-align: center;
+#             font-size: 12px;
+#             color: #999;
+#             margin-top: 40px;
+#         }
+#         .footer a {
+#             color: #0078d4;
+#             text-decoration: none;
+#         }
+#     </style>
+# </head>
+# <body>
+#     <div class="container">
+#         <div class="header">
+#             <img src="https://upload.wikimedia.org/wikipedia/commons/d/db/Office_365_logo.svg" alt="Office 365" class="logo">
+#         </div>
+#         <h1>Unusual Sign-In Activity Detected</h1>
+#         <p>We noticed an unusual sign-in attempt to your Office 365 account. For your security, please verify this activity.</p>
+#         <p>If this was you, please sign in to your account to confirm your identity. If this wasn’t you, we recommend reviewing your account activity and changing your password immediately.</p>
+
+#         <div class="button-container">
+#             <a href="https://login.microsoftonline.com/" class="btn">Verify Sign-In</a>
+#         </div>
+
+#         <p>If you did not request this, no further action is required.</p>
+
+#         <div class="footer">
+#             <p>&copy; 2024 Microsoft Corporation. All rights reserved.</p>
+#             <p><a href="https://privacy.microsoft.com">Privacy & Cookies</a> | <a href="https://support.microsoft.com">Support</a></p>
+#         </div>
+#     </div>
+# </body>
+# </html>"
 
 # send_opsgenie_alert "$API_KEY" "$API_URL" "$HTML_CODE"
