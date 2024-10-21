@@ -62,9 +62,6 @@ WORKDIR /app
 COPY --from=build ${EVILGINX_BIN} ${EVILGINX_BIN}
 COPY --from=build /app .
 
-# Add config.json from the parent directory
-COPY ../config.json /app/config.json
-
 # Add setup.sh to docker container
 COPY ./setup.sh /app/setup.sh
 
