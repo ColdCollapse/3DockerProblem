@@ -15,7 +15,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ./Evilginx2-docker/blacklist.txt:/root/.evilginx
       - ./config.json:/app/config.json
-      - ./app/phishlets:/app/phishlets
+      - ./Evilginx2-docker/phishlets:/app/phishlets
       - shared-data:/shared-data  # Shared volume
     command: ["/bin/sh", "-c", "mkdir -p /shared-data/EG2_DB /shared-data/fresh-data /shared-data/used-data"]
     #command: ["/bin/bash"]
