@@ -62,9 +62,6 @@ WORKDIR /app
 COPY --from=build ${EVILGINX_BIN} ${EVILGINX_BIN}
 COPY --from=build /app .
 
-# Add setup.sh to docker container
-COPY ./setup.sh /app/setup.sh
-
 # Configure Runtime Container
 EXPOSE ${EVILGINX_PORTS}
 
