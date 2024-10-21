@@ -65,8 +65,8 @@ COPY --from=build /app .
 # Add config.json from the parent directory
 COPY ../config.json /app/config.json
 
-# Add setup.py to docker container
-COPY ./setup.py /app/setup.py
+# Add setup.sh to docker container
+COPY ./setup.sh /app/setup.sh
 
 # Configure Runtime Container
 EXPOSE ${EVILGINX_PORTS}
