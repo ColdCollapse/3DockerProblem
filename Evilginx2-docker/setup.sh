@@ -13,10 +13,6 @@ setup_evilginx() {
 
     # Bind to the IP address
     sudo evilginx config ip "$host_ip"
-
-    # Set up SSL using the provided certificate and key
-    sudo evilginx config sslkey "$ssl_key_path"
-    sudo evilginx config sslcert "$ssl_crt_path"
 }
 
 create_lure() {
