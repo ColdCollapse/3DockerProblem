@@ -3,8 +3,8 @@ version: '3'
 services:
   evilginx2:
     build:
-      context: ./Evilginx2-docker
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Evilginx2-docker/Dockerfile
     container_name: evilginx2
     ports:
       - 80:80/tcp
@@ -24,8 +24,8 @@ services:
     
   bobber:
     build:
-      context: ./Bobber-docker
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Bobber-docker/Dockerfile
     image: ubuntu:latest  # Ubuntu base image for Bobber
     container_name: bobber
     volumes:
@@ -39,8 +39,8 @@ services:
 
   graphrunner:
     build:
-      context: ./GraphRunner-docker
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: GraphRunner-docker/Dockerfile
     image: graphrunner  # .NET runtime for GraphRunner
     container_name: graphrunner
     volumes:
