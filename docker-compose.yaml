@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Evilginx2-docker/Dockerfile
-    container_name: evilginx2
+    container_name: 3BP_EvilGinx2
     ports:
       - 80:80/tcp
       - 443:443/tcp
