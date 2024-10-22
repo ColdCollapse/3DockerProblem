@@ -10,6 +10,8 @@ services:
       - 80:80/tcp
       - 443:443/tcp
       - 53:53/udp
+    networks:
+      - mynetwork
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
