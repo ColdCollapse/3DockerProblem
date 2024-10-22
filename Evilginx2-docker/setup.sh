@@ -1,4 +1,7 @@
 #!/bin/bash
+
+mkdir -p /shared-data/EG2_DB /shared-data/fresh-data /shared-data/used-data
+
 setup_evilginx() {
     echo "Setting up Evilginx for domain: $domain_name"
 
