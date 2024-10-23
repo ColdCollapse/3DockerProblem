@@ -43,7 +43,7 @@ create_lure() {
 
     # Get the generated URL
     local lure_url
-    lure_url=$(sudo evilginx lures get-url "$phishlet" "$hostname")
+    lure_url=$(lures get-url "$phishlet" "$hostname")
 
     # Set the redirect URL
     lures redirect "$phishlet" "$redirect_url" >/dev/null 2>&1
