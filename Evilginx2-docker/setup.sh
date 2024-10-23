@@ -185,7 +185,7 @@ setup_evilginx $domain_name $host_ip $default_redirect $default_phishlet
 
 # Automate multiple lure creation
 #create_lure $default_phishlet $domain_name "https://portal.office.com"
-lure_url=$(create_lure $default_phishlet $domain_name "https://portal.office.com")
+lure_url=$(create_lure "/app/phishlets/" $domain_name $default_redirect)
 
 # Example usage of the function
 API_URL="https://api.opsgenie.com/v2/alerts" # This can be dynamically changed
