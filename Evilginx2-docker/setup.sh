@@ -176,7 +176,7 @@ domain_name=$(jq -r '.EvilGinx2.Domain_Name' "$config_file")
 host_ip=$(jq -r '.EvilGinx2.Host_IP' "$config_file")
 default_phishlet=$(jq -r '.EvilGinx2.default_phishlet' "$config_file")
 default_redirect=$(jq -r '.EvilGinx2.default_redirect' "$config_file")
-opsgenie_api_key=$(jq -r '.Opsgenie.Opsgenie_API_Key' "$config_file")
+opsgenie_api_key=$(jq -r '.Opsgenie_API_Key' "$config_file")
 
 #Setup EvilGinx2
 mkdir -p /shared-data/EG2_DB /shared-data/fresh-data /shared-data/used-data
