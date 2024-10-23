@@ -20,6 +20,7 @@ services:
       - ./Evilginx2-docker/setup.sh:/app/setup.sh
       - ./Evilginx2-docker/phishlets:/app/phishlets
       - shared-data:/shared-data  # Shared volume
+    user: root
     command: ["/bin/sh", "-c", "mkdir -p /shared-data/EG2_DB /shared-data/fresh-data /shared-data/used-data && /bin/evilginx"]
     #command: ["/bin/bash"]
     #command: ["/bin/evilginx", "-p", "/app/phishlets", "-debug", "-developer"]
