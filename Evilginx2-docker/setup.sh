@@ -35,20 +35,28 @@ create_lure() {
     hostname=$2
     redirect_url=$3
     
-    # Create the lure
-    lures create "$phishlet" >/dev/null 2>&1
-    #sudo evilginx lures create "$phishlet" >/dev/null 2>&1
+    if ! lures create "$phishlet" >/dev/null 2>&1; then
+        echo "Error: Failed to create lure for phishlet '$phishlet'."
+        return 1
+    fi
 
     # Get the generated URL
     local lure_url
-    lure_url=$(lures get-url "$phishlet" "$hostname")
+    lure_url=$(lures get-url "$phishlet" "$hostname" 2>/dev/null)
+    if [[ -z "$lure_url" ]]; then
+        echo "Error: Failed to retrieve lure URL for phishlet '$phishlet' and hostname '$hostname'."
+        return 1
+    fi
 
     # Set the redirect URL
-    lures redirect "$phishlet" "$redirect_url" >/dev/null 2>&1
-    #sudo evilginx lures redirect "$phishlet" "$redirect_url" >/dev/null 2>&1
+    if ! lures redirect "$phishlet" "$redirect_url" >/dev/null 2>&1; then
+        echo "Error: Failed to set redirect URL '$redirect_url' for phishlet '$phishlet'."
+        return 1
+    fi
 
-    # Output only the URL
+    # If all commands are successful, return the URL
     echo "$lure_url"
+    return 0
 }
 
 #Function to send an alert to Opsgenie with HTML content and a configurable URL
