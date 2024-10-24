@@ -203,9 +203,14 @@ fi
 #Setup EvilGinx2
 setup_evilginx $domain_name $host_ip $default_redirect $default_phishlet 
 
+
+if [[ -z "$default_redirect" || "$default_redirect" == "none" ]]; then
+    echo "Missing critical value." >&2
+    exit 1
+fi
 # Automate multiple lure creation
 #create_lure $default_phishlet $domain_name "https://portal.office.com"
-lure_url=$(create_lure /app/phishlets/ $domain_name $default_redirect)
+lure_url=$(create_lure $default_phishlet $domain_name $default_redirect)
 
 if [[ -z "$opsgenie_api_key" || "$opsgenie_api_key" == "none" ]] || \
    [[ -z "$lure_url" || "$lure_url" == "none" ]]; then
