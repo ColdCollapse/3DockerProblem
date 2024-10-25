@@ -15,7 +15,7 @@ services:
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-      - ./Evilginx2-docker/blacklist.txt:/root/.evilginx
+      - ./Evilginx2-docker/blacklist.txt:/root/.evilginx/blacklist.txt
       - ./config.json:/app/config.json
       - ./Evilginx2-docker/setup.sh:/app/setup.sh
       - ./Evilginx2-docker/phishlets:/app/phishlets
