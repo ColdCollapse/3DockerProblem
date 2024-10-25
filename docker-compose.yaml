@@ -22,7 +22,8 @@ services:
       - shared-data:/shared-data  # Shared volume
       - shared_EG2_DB:/root/.evilginx
     user: root
-    command: ["/bin/sh", "-c", "mkdir -p /shared-data/EG2_DB /shared-data/fresh-data /shared-data/used-data && /bin/evilginx"] #Make this Entrypoint.sh setup.sh
+    entrypoint: ["/app/setup.sh"]
+    #command: ["/bin/sh", "-c", "mkdir -p /shared-data/EG2_DB /shared-data/fresh-data /shared-data/used-data && /bin/evilginx"] #Make this Entrypoint.sh setup.sh
     #command: ["/bin/bash"]
     #command: ["/bin/evilginx", "-p", "/app/phishlets", "-debug", "-developer"]
     stdin_open: true
