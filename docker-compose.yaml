@@ -20,7 +20,7 @@ services:
       - ./Evilginx2-docker/setup.sh:/app/setup.sh
       - ./Evilginx2-docker/phishlets:/app/phishlets
       - shared-data:/shared-data  # Shared volume
-      - shared_EG2_DB:/root/.evilginx
+    # - shared_EG2_DB:/root/.evilginx
     user: root
     entrypoint: ["/app/setup.sh"]
     #command: ["/bin/sh", "-c", "mkdir -p /shared-data/EG2_DB /shared-data/fresh-data /shared-data/used-data && /bin/evilginx"] #Make this Entrypoint.sh setup.sh
