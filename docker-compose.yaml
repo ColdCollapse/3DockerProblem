@@ -43,7 +43,7 @@ services:
     working_dir: /app
     #command: ["/bin/sh", "-c", "mkdir -p /shared-data/fresh-data /shared-data/used-data"]
     depends_on:
-      - 3BP_EvilGinx2
+      - 3BP_Evilginx2
 
   graphrunner:
     build:
@@ -59,7 +59,7 @@ services:
     #command: /bin/bash -c "git clone https://github.com/dafthack/GraphRunner.git && cd GraphRunner && dotnet run"
     #command: "Import-Module .\GraphRunner.ps1"
     depends_on:
-      - 3BP_EvilGinx2
+      - 3BP_Evilginx2
 
 networks:
   mynetwork:
