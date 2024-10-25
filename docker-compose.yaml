@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Evilginx2-docker/Dockerfile
-    container_name: 3BP_EvilGinx2
+    container_name: 3BP_Evilginx2
     ports:
       - 80:80/tcp
       - 443:443/tcp
@@ -34,7 +34,7 @@ services:
       context: .
       dockerfile: Bobber-docker/Dockerfile
     image: ubuntu:latest  # Ubuntu base image for Bobber
-    container_name: bobber
+    container_name: 3BP_Bobber
     volumes:
       - shared-data:/shared-data  # Shared volume
       - shared_EG2_DB:/root/.evilginx
@@ -50,7 +50,7 @@ services:
       context: .
       dockerfile: GraphRunner-docker/Dockerfile
     image: graphrunner  # .NET runtime for GraphRunner
-    container_name: graphrunner
+    container_name: 3BP_Graphrunner
     volumes:
       - shared-data:/shared-data  # Shared volume
     networks:
