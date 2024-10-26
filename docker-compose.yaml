@@ -36,7 +36,6 @@ services:
     container_name: 3DP_Bobber
     volumes:
       - shared-data:/shared-data  # Shared volume
-      - shared_EG2_DB:/root/.evilginx
     networks:
       - mynetwork
     working_dir: /app
