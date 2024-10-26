@@ -19,8 +19,7 @@ services:
       - ./config.json:/app/config.json
       - ./Evilginx2-docker/setup.sh:/app/setup.sh
       - ./Evilginx2-docker/phishlets:/app/phishlets
-      - shared-data:/shared-data  # Shared volume
-    # - shared_EG2_DB:/root/.evilginx
+      - shared-data:/root/.evilginx # Shared volume
     user: root
     entrypoint: ["/app/setup.sh"]
     #command: ["/bin/sh", "-c", "mkdir -p /shared-data/EG2_DB /shared-data/fresh-data /shared-data/used-data && /bin/evilginx"] #Make this Entrypoint.sh setup.sh
@@ -68,9 +67,3 @@ networks:
 volumes:
   shared-data:
     driver: local
-  shared_EG2_DB:
-    driver: local
-    driver_opts:
-      type: none
-      device: /root/.evilginx
-      o: bind
