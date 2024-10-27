@@ -14,10 +14,14 @@ RUN apt-get update && apt-get install -y \
 # Add GeckoDriver (latest version) from GitHub
 RUN wget -qO- https://github.com/mozilla/geckodriver/releases/latest/download/geckodriver-v0.33.0-linux64.tar.gz | tar xvz -C /usr/local/bin
 
+# Clone TeamFiltration repository and install its requirements
+RUN git clone https://github.com/Flangvik/TeamFiltration.git /app/teamfiltration
+RUN pip install --no-cache-dir -r /app/teamfiltration/requirements.txt
+
 # Copy the custom Bobber script (3DP_Bobber.py) into the image
 COPY 3DP_Bobber.py /app/3DP_Bobber.py
 
-# Install the required Python modules
+# Install the required Python modules for Bobber
 RUN pip install --no-cache-dir \
     colorama==0.4.6 \
     paramiko==3.3.1 \
@@ -30,8 +34,8 @@ RUN pip install --no-cache-dir \
     selenium_wire==5.1.0 \
     blinker==1.7.0
 
-# Expose any necessary ports (customize based on Bobber's requirements)
+# Expose any necessary ports (customize based on tool requirements)
 # EXPOSE 8080
 
-# Set the entrypoint to run the Bobber tool with Python
+# Set entrypoint to run the Bobber tool, modify as necessary for TeamFiltration
 CMD ["python", "3DP_Bobber.py"]
