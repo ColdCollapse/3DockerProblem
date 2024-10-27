@@ -1,6 +1,5 @@
-# Base image
-#double check this
-FROM ubuntu/python
+# Use an official Ubuntu image with Python installed
+FROM python:3.9-slim
 
 # Set working directory
 WORKDIR /app
@@ -9,19 +8,20 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     git \
     curl \
+    wget \
     && rm -rf /var/lib/apt/lists/*
 
-# Clone the Bobber repository
-# RUN git clone https://github.com/Flangvik/Bobber.git .
-# Add bobber_modified to image instead of actual Bobber; Add the Bobber Repo as possible back up.
+# Add GeckoDriver (latest version) from GitHub
+RUN wget -qO- https://github.com/mozilla/geckodriver/releases/latest/download/geckodriver-v0.33.0-linux64.tar.gz | tar xvz -C /usr/local/bin
 
-#To Do: Add 3DP_Bobber.py to image.
+# Copy the custom Bobber script (3DP_Bobber.py) into the image
 COPY 3DP_Bobber.py /app/3DP_Bobber.py
+
 # Install the required Python modules
-RUN pip install \
+RUN pip install --no-cache-dir \
     colorama==0.4.6 \
     paramiko==3.3.1 \
-    Requests==2.31.0 \
+    requests==2.31.0 \
     roadlib==0.19.1 \
     roadrecon==1.1.4 \
     roadtools==0.0.1 \
@@ -31,10 +31,7 @@ RUN pip install \
     blinker==1.7.0
 
 # Expose any necessary ports (customize based on Bobber's requirements)
-#EXPOSE 8080
+# EXPOSE 8080
 
-# Add config.json from the parent directory
-COPY ../config.json /app/config.json
-
-# Set the entrypoint or command to run the Bobber tool (modify according to its usage)
-CMD ["python", "3DP_bobber.py"]
+# Set the entrypoint to run the Bobber tool with Python
+CMD ["python", "3DP_Bobber.py"]
