@@ -21,7 +21,7 @@ services:
       - ./Evilginx2-docker/phishlets:/app/phishlets
       - shared-data:/root/.evilginx # Shared volume
     user: root
-    entrypoint: ["/app/setup.sh"]
+    entrypoint: ["/bin/sh","/app/setup.sh"]
     stdin_open: true
     tty: true
     
