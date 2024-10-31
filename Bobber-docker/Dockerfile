@@ -1,6 +1,7 @@
-# Use an official Ubuntu image with Python installed
+# Start from Python base image
 FROM python:3.9-slim
 
+# Define Go version and GOPATH for Azurehound
 ARG GOLANG_VERSION=1.16
 ARG GOPATH=/opt/go
 
@@ -16,21 +17,33 @@ RUN apt-get update && apt-get install -y \
 
 # Install Go
 RUN set -ex \
-    && wget https://dl.google.com/go/go${GOLANG_VERSION}.src.tar.gz && tar -C /usr/local -xzf go$GOLANG_VERSION.src.tar.gz \
-    && rm go${GOLANG_VERSION}.src.tar.gz \
-    && cd /usr/local/go/src && ./make.bash \
+    && wget https://dl.google.com/go/go${GOLANG_VERSION}.linux-amd64.tar.gz \
+    && tar -C /usr/local -xzf go${GOLANG_VERSION}.linux-amd64.tar.gz \
+    && rm go${GOLANG_VERSION}.linux-amd64.tar.gz
 
-# Add GeckoDriver (latest version) from GitHub
+# Add Go to PATH
+ENV PATH="/usr/local/go/bin:${PATH}"
+
+# Set GOPATH for Azurehound
+ENV GOPATH=${GOPATH}
+
+# Install GeckoDriver (latest version)
 RUN wget -qO- https://github.com/mozilla/geckodriver/releases/latest/download/geckodriver-v0.33.0-linux64.tar.gz | tar xvz -C /usr/local/bin
 
 # Clone TeamFiltration repository and install its requirements
 RUN git clone https://github.com/Flangvik/TeamFiltration.git /app/teamfiltration
 RUN pip install --no-cache-dir -r /app/teamfiltration/requirements.txt
 
+# Clone and build Azurehound
+RUN git clone https://github.com/BloodHoundAD/AzureHound.git ${GOPATH}/src/azurehound \
+    && cd ${GOPATH}/src/azurehound \
+    && go mod download \
+    && go build -o /usr/local/bin/azurehound .
+
 # Copy the custom Bobber script (3DP_Bobber.py) into the image
 COPY 3DP_Bobber.py /app/3DP_Bobber.py
 
-# Install the required Python modules for Bobber
+# Install required Python modules for Bobber
 RUN pip install --no-cache-dir \
     colorama==0.4.6 \
     paramiko==3.3.1 \
@@ -43,8 +56,5 @@ RUN pip install --no-cache-dir \
     selenium_wire==5.1.0 \
     blinker==1.7.0
 
-# Expose any necessary ports (customize based on tool requirements)
-# EXPOSE 8080
-
-# Set entrypoint to run the Bobber tool, modify as necessary for TeamFiltration
+# Set default command to run the Bobber script
 CMD ["python", "3DP_Bobber.py"]
