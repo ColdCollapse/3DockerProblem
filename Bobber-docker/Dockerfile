@@ -1,6 +1,9 @@
 # Use an official Ubuntu image with Python installed
 FROM python:3.9-slim
 
+ARG GOLANG_VERSION=1.16
+ARG GOPATH=/opt/go
+
 # Set working directory
 WORKDIR /app
 
@@ -10,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     wget \
     && rm -rf /var/lib/apt/lists/*
+
 
 RUN set -ex \
     && wget https://dl.google.com/go/go${GOLANG_VERSION}.src.tar.gz && tar -C /usr/local -xzf go$GOLANG_VERSION.src.tar.gz \
