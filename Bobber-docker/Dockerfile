@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
-
+# Install Go
 RUN set -ex \
     && wget https://dl.google.com/go/go${GOLANG_VERSION}.src.tar.gz && tar -C /usr/local -xzf go$GOLANG_VERSION.src.tar.gz \
     && rm go${GOLANG_VERSION}.src.tar.gz \
