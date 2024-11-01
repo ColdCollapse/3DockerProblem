@@ -1,7 +1,7 @@
 # Start from Python base image
 FROM python:3.9-slim
 
-# Define Go version and GOPATH for Azurehound
+# Define Go version and GOPATH for AzureHound
 ARG GOLANG_VERSION=1.16
 ARG GOPATH=/opt/go
 
@@ -24,7 +24,7 @@ RUN set -ex \
 # Add Go to PATH
 ENV PATH="/usr/local/go/bin:${PATH}"
 
-# Set GOPATH for Azurehound
+# Set GOPATH for AzureHound
 ENV GOPATH=${GOPATH}
 
 # Install GeckoDriver (latest version)
@@ -34,11 +34,11 @@ RUN wget -qO- https://github.com/mozilla/geckodriver/releases/latest/download/ge
 RUN git clone https://github.com/Flangvik/TeamFiltration.git /app/teamfiltration
 RUN pip install --no-cache-dir -r /app/teamfiltration/requirements.txt
 
-# Clone and build Azurehound
+# Clone and build AzureHound
 RUN git clone https://github.com/BloodHoundAD/AzureHound.git ${GOPATH}/src/azurehound \
     && cd ${GOPATH}/src/azurehound \
     && go mod download \
-    && go build -o /usr/local/bin/azurehound .
+    && go build -o /app/azurehound.exe .
 
 # Copy the custom Bobber script (3DP_Bobber.py) into the image
 COPY 3DP_Bobber.py /app/3DP_Bobber.py
