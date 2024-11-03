@@ -59,9 +59,17 @@ RUN apk add --no-cache python3 jq py3-pip sqlite sqlite-libs
 
 # Install EvilGinx2
 WORKDIR /app
-COPY --chmod=0755 setup.sh .
 COPY --from=build ${EVILGINX_BIN} ${EVILGINX_BIN}
 COPY --from=build /app .
+
+# Copy additional configuration files
+COPY ./Evilginx2-docker/blacklist.txt /root/.evilginx/blacklist.txt
+COPY ./config.json /app/config.json
+COPY ./Evilginx2-docker/setup.sh /app/setup.sh
+COPY ./Evilginx2-docker/phishlets /app/phishlets
+
+# Set execute permissions for setup.sh
+RUN chmod +x /app/setup.sh
 
 # Configure Runtime Container
 EXPOSE ${EVILGINX_PORTS}
