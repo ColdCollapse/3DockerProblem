@@ -31,7 +31,7 @@ const jsonFileName = "sessions.json"
 
 func main() {
 	// Open the database
-	db, err := buntdb.Open("evilginx2.db") // Update with the actual path to your Evilginx2 database
+	db, err := buntdb.Open("data.db") // Update with the actual path to your Evilginx2 database
 	if err != nil {
 		fmt.Println("Error opening database:", err)
 		return
