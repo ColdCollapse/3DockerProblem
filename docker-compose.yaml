@@ -49,7 +49,7 @@ services:
     #command: /bin/bash -c "git clone https://github.com/dafthack/GraphRunner.git && cd GraphRunner && dotnet run"
     #command: "Import-Module .\GraphRunner.ps1"
     depends_on:
-      - evilginx2
+      - bobber
 
 networks:
   mynetwork:
