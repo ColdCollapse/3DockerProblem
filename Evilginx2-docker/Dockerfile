@@ -55,10 +55,11 @@ FROM alpine:latest
 ENV EVILGINX_PORTS="443 80 53/udp"
 ARG EVILGINX_BIN
 
-RUN apk add --no-cache python3 jq py3-pip
+RUN apk add --no-cache python3 jq py3-pip sqlite sqlite-libs
 
 # Install EvilGinx2
 WORKDIR /app
+COPY --chmod=0755 setup.sh .
 COPY --from=build ${EVILGINX_BIN} ${EVILGINX_BIN}
 COPY --from=build /app .
 
