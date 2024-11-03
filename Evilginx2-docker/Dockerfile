@@ -63,10 +63,9 @@ COPY --from=build ${EVILGINX_BIN} ${EVILGINX_BIN}
 COPY --from=build /app .
 
 # Copy additional configuration files
-COPY ./Evilginx2-docker/blacklist.txt /root/.evilginx/blacklist.txt
-COPY ./config.json /app/config.json
-COPY ./Evilginx2-docker/setup.sh /app/setup.sh
-COPY ./Evilginx2-docker/phishlets /app/phishlets
+COPY ./blacklist.txt /root/.evilginx/blacklist.txt
+COPY ./setup.sh /app/setup.sh
+COPY ./phishlets /app/phishlets
 
 # Set execute permissions for setup.sh
 RUN chmod +x /app/setup.sh
