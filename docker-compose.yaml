@@ -34,8 +34,6 @@ services:
       - mynetwork
     working_dir: /app
     #command: ["/bin/sh", "-c", "mkdir -p /shared-data/fresh-data /shared-data/used-data"]
-    depends_on:
-      - evilginx2
 
   graphrunner:
     build:
