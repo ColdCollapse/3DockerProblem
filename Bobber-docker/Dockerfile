@@ -2,7 +2,7 @@
 FROM python:3.9-slim
 
 # Define Go version and GOPATH for AzureHound
-ARG GOLANG_VERSION=1.17
+ARG GOLANG_VERSION=1.20
 ARG GOPATH=/opt/go
 
 # Set working directory
