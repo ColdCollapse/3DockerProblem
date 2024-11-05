@@ -112,3 +112,4 @@ func appendSessionsToJson(sessions []*Session, filename string) error {
 	}
 
 	return ioutil.WriteFile(filename, newData, 0644)
+}
