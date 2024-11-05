@@ -32,7 +32,7 @@ ENV GOPATH=${GOPATH}
 
 # Clone TeamFiltration repository and install its requirements
 RUN git clone https://github.com/Flangvik/TeamFiltration.git /app/teamfiltration
-RUN pip install --no-cache-dir -r /app/teamfiltration/requirements.txt
+#RUN pip install --no-cache-dir -r /app/teamfiltration/requirements.txt
 
 # Clone and build AzureHound
 RUN git clone https://github.com/BloodHoundAD/AzureHound.git ${GOPATH}/src/azurehound \
