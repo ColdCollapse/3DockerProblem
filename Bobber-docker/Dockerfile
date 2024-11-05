@@ -59,4 +59,4 @@ RUN pip install --no-cache-dir \
     blinker==1.7.0
 
 # Set default command to run the Bobber script
-CMD ["python", "3DP_Bobber.py"]
+#CMD ["python", "3DP_Bobber.py"]
