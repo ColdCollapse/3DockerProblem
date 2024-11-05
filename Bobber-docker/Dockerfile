@@ -2,7 +2,7 @@
 FROM python:3.9-slim
 
 # Define Go version and GOPATH for AzureHound
-ARG GOLANG_VERSION=1.16
+ARG GOLANG_VERSION=1.17
 ARG GOPATH=/opt/go
 
 # Set working directory
@@ -16,8 +16,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Go
-RUN set -ex \
-    && wget https://dl.google.com/go/go${GOLANG_VERSION}.linux-amd64.tar.gz \
+RUN wget https://dl.google.com/go/go${GOLANG_VERSION}.linux-amd64.tar.gz \
     && tar -C /usr/local -xzf go${GOLANG_VERSION}.linux-amd64.tar.gz \
     && rm go${GOLANG_VERSION}.linux-amd64.tar.gz
 
@@ -39,6 +38,7 @@ RUN git clone https://github.com/Flangvik/TeamFiltration.git /app/teamfiltration
 # Clone and build AzureHound
 RUN git clone https://github.com/BloodHoundAD/AzureHound.git ${GOPATH}/src/azurehound \
     && cd ${GOPATH}/src/azurehound \
+    && go mod tidy \
     && go mod download \
     && go build -o /app/azurehound.exe .
 
