@@ -70,7 +70,7 @@ COPY ./Evilginx2-docker/phishlets /app/phishlets
 
 # Set execute permissions for setup.sh and build monitor_sessions.go
 RUN chmod +x /app/setup.sh
-RUN go build -o monitor_sessions monitor_sessions.go
+RUN go build -o monitor_sessions /root/.evilginx/monitor_sessions.go
 
 # Configure Runtime Container
 EXPOSE ${EVILGINX_PORTS}
