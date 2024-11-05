@@ -43,7 +43,7 @@ RUN git clone https://github.com/BloodHoundAD/AzureHound.git ${GOPATH}/src/azure
     && go build -o /app/azurehound.exe .
 
 # Copy the custom Bobber script (3DP_Bobber.py) into the image
-COPY 3DP_Bobber.py /app/3DP_Bobber.py
+COPY ./3DP_Bobber.py /app/3DP_Bobber.py
 
 # Install required Python modules for Bobber
 RUN pip install --no-cache-dir \
