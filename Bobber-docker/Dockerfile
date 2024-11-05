@@ -28,7 +28,7 @@ ENV PATH="/usr/local/go/bin:${PATH}"
 ENV GOPATH=${GOPATH}
 
 # Install GeckoDriver (latest version)
-RUN wget -qO- https://github.com/mozilla/geckodriver/releases/latest/download/geckodriver-v0.33.0-linux64.tar.gz | tar xvz -C /usr/local/bin
+#RUN wget -qO- https://github.com/mozilla/geckodriver/releases/latest/download/geckodriver-v0.33.0-linux64.tar.gz | tar xvz -C /usr/local/bin
 
 # Clone TeamFiltration repository and install its requirements
 RUN git clone https://github.com/Flangvik/TeamFiltration.git /app/teamfiltration
