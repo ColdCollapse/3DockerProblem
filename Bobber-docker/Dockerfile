@@ -32,12 +32,15 @@ RUN wget -O /tmp/geckodriver.tar.gz https://github.com/mozilla/geckodriver/relea
     && tar xvz -f /tmp/geckodriver.tar.gz -C /usr/local/bin \
     && rm /tmp/geckodriver.tar.gz
 
-# Clone and build AzureHound
-RUN git clone https://github.com/BloodHoundAD/AzureHound.git ${GOPATH}/src/azurehound \
-    && cd ${GOPATH}/src/azurehound \
+# Clone AzureHound repository
+RUN git clone https://github.com/BloodHoundAD/AzureHound.git ${GOPATH}/src/azurehound
+
+# Build AzureHound with version info and make it executable
+RUN cd ${GOPATH}/src/azurehound \
     && go mod tidy \
     && go mod download \
-    && go build -o /app/azurehound.exe .
+    && go build -ldflags="-s -w -X github.com/bloodhoundad/azurehound/v2/constants.Version=$(git describe --tags --exact-match 2>/dev/null || git rev-parse HEAD)" -o /app/azurehound.exe \
+    && chmod +x /app/azurehound.exe
 
 # Copy the custom Bobber script (3DP_Bobber.py) into the image
 COPY ./Bobber-docker/3DP_Bobber.py /app/3DP_Bobber.py
@@ -60,7 +63,7 @@ RUN wget https://github.com/Flangvik/TeamFiltration/releases/download/v3.5.4/Tea
     && unzip TeamFiltration.zip -d TeamFiltration \
     && rm TeamFiltration.zip
 
-# Make TeamFiltration executable (if needed)
+# Make TeamFiltration executable
 RUN chmod +x TeamFiltration/TeamFiltration
 
 # Set default command to run the Bobber script
