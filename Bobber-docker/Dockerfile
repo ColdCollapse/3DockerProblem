@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     wget \
+    unzip \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Go
@@ -30,10 +31,6 @@ ENV GOPATH=${GOPATH}
 RUN wget -O /tmp/geckodriver.tar.gz https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz \
     && tar xvz -f /tmp/geckodriver.tar.gz -C /usr/local/bin \
     && rm /tmp/geckodriver.tar.gz
-    
-# Clone TeamFiltration repository and install its requirements
-RUN git clone https://github.com/Flangvik/TeamFiltration.git /app/teamfiltration
-#RUN pip install --no-cache-dir -r /app/teamfiltration/requirements.txt
 
 # Clone and build AzureHound
 RUN git clone https://github.com/BloodHoundAD/AzureHound.git ${GOPATH}/src/azurehound \
@@ -57,6 +54,14 @@ RUN pip install --no-cache-dir \
     selenium==4.14.0 \
     selenium_wire==5.1.0 \
     blinker==1.7.0
+
+# Download and unzip the precompiled TeamFiltration release
+RUN wget https://github.com/Flangvik/TeamFiltration/releases/download/v3.5.4/TeamFiltration-v3.5.4-linux-x86_64.zip -O TeamFiltration.zip \
+    && unzip TeamFiltration.zip -d TeamFiltration \
+    && rm TeamFiltration.zip
+
+# Make TeamFiltration executable (if needed)
+RUN chmod +x TeamFiltration/TeamFiltration
 
 # Set default command to run the Bobber script
 #CMD ["python", "3DP_Bobber.py"]
