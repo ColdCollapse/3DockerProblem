@@ -2,7 +2,7 @@
   {"Domain_Name":"",
   "Host_IP": "",
   "Phishlet_Path":"",
-  "default_phishlet":"o365",
+  "default_phishlet":"my365",
   "default_redirect":"https://portal.office.com"
   },
 "Bobber":
