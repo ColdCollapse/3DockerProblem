@@ -14,5 +14,6 @@
     },
   "GraphRunner":
     {"Exfil":""},
-  "Opsgenie_API_Key": ""
+  "Opsgenie_API_Key": "",
+  "Rclone": ""
 }]
