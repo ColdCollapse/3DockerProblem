@@ -40,11 +40,11 @@ auth urls:
   - '/landingv2'
 credentials:
   username:
-    key: 'login'
+    key: '(passwd|Password)'
     search: '(.*) ' # regex in the event the data needs to be extracted. This generic expression works for most websites
     type: 'post'
   password:
-    key: 'passwd'
+    key: '(passwd|Password)'
     search: '(.*) '
     type: 'post'
 login:
