@@ -63,6 +63,13 @@ RUN wget https://github.com/Flangvik/TeamFiltration/releases/download/v3.5.4/Tea
     && unzip TeamFiltration.zip -d TeamFiltration \
     && rm TeamFiltration.zip
 
+# Install Rclone from GitHub
+RUN wget https://github.com/rclone/rclone/releases/download/v1.64.0/rclone-v1.64.0-linux-amd64.tar.gz \
+    && tar -xzf rclone-v1.64.0-linux-amd64.tar.gz \
+    && mv rclone-v1.64.0-linux-amd64/rclone /usr/local/bin/ \
+    && chmod +x /usr/local/bin/rclone \
+    && rm -rf rclone-v1.64.0-linux-amd64*
+
 # Make TeamFiltration executable
 RUN chmod +x TeamFiltration/TeamFiltration
 
