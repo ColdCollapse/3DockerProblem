@@ -1,41 +1,25 @@
-FROM python:3.9-slim
+# Use a Go base image with the desired version, adding Python
+FROM golang:1.23 AS builder
 
-# Define Go version and GOPATH for AzureHound
-ARG GOLANG_VERSION=1.20
-ARG GOPATH=/opt/go
-
-# Set working directory
-WORKDIR /app
-
-# Install system dependencies
+# Install Python dependencies
 RUN apt-get update && apt-get install -y \
-    git \
-    curl \
+    python3-pip \
     wget \
     unzip \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Go
-RUN wget https://dl.google.com/go/go${GOLANG_VERSION}.linux-amd64.tar.gz \
-    && tar -C /usr/local -xzf go${GOLANG_VERSION}.linux-amd64.tar.gz \
-    && rm go${GOLANG_VERSION}.linux-amd64.tar.gz
-
-# Add Go to PATH
-ENV PATH="/usr/local/go/bin:${PATH}"
-
-# Set GOPATH for AzureHound
-ENV GOPATH=${GOPATH}
+# Set GOPATH and working directory for AzureHound
+ENV GOPATH=/opt/go
+WORKDIR /app
 
 # Install GeckoDriver (latest version)
 RUN wget -O /tmp/geckodriver.tar.gz https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz \
     && tar xvz -f /tmp/geckodriver.tar.gz -C /usr/local/bin \
     && rm /tmp/geckodriver.tar.gz
 
-# Clone AzureHound repository
-RUN git clone https://github.com/BloodHoundAD/AzureHound.git ${GOPATH}/src/azurehound
-
-# Build AzureHound with version info and make it executable
-RUN cd ${GOPATH}/src/azurehound \
+# Clone AzureHound repository and build it
+RUN git clone https://github.com/BloodHoundAD/AzureHound.git ${GOPATH}/src/azurehound \
+    && cd ${GOPATH}/src/azurehound \
     && go mod tidy \
     && go mod download \
     && go build -ldflags="-s -w -X github.com/bloodhoundad/azurehound/v2/constants.Version=$(git describe --tags --exact-match 2>/dev/null || git rev-parse HEAD)" -o /app/azurehound.exe \
@@ -45,7 +29,7 @@ RUN cd ${GOPATH}/src/azurehound \
 COPY ./Bobber-docker/3DP_Bobber.py /app/3DP_Bobber.py
 
 # Install required Python modules for Bobber
-RUN pip install --no-cache-dir \
+RUN pip3 install --no-cache-dir \
     colorama==0.4.6 \
     paramiko==3.3.1 \
     requests==2.31.0 \
@@ -73,4 +57,4 @@ RUN wget https://github.com/rclone/rclone/releases/download/v1.64.0/rclone-v1.64
 RUN chmod +x TeamFiltration/TeamFiltration
 
 # Set default command to run the Bobber script
-#CMD ["python", "3DP_Bobber.py"]
+CMD ["python3", "3DP_Bobber.py"]
