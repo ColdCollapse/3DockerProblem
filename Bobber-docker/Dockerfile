@@ -1,4 +1,3 @@
-# Start from Python base image
 FROM python:3.9-slim
 
 # Define Go version and GOPATH for AzureHound
