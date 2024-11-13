@@ -57,4 +57,4 @@ RUN wget https://github.com/rclone/rclone/releases/download/v1.64.0/rclone-v1.64
 RUN chmod +x TeamFiltration/TeamFiltration
 
 # Set default command to run the Bobber script
-CMD ["python3", "3DP_Bobber.py"]
+#CMD ["python3", "3DP_Bobber.py"]
