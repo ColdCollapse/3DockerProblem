@@ -25,9 +25,11 @@ setup_evilginx() {
     phishlets hostname "$default_phishlet" "$domain_name"
     
     if ! phishlets enable "$default_phishlet"; then
-    echo "Failed to enable phishlet" >&2
+    echo "Failed to enable phishlet: $default_phishlet" >&2
     exit 1
-    fi    
+    else
+        echo "Phishlet '$default_phishlet' enabled successfully."
+    fi   
 }
 
 create_lure() {
