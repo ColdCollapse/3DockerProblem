@@ -187,7 +187,7 @@ send_opsgenie_alert() {
 }
 
 #Log checking purposes
-echo "Starting setup script..." >&2
+echo "Initializing Evilginx2" >&2
 
 # Read configuration from config.json
 config_file="config.json"
