@@ -19,11 +19,18 @@ setup_evilginx() {
     
     # Bind to the IP address
     #sudo evilginx config ip "$host_ip"
-    config ip "$host_ip"    
+    config ip "$host_ip"
+    
+    if phishlets hostname "$default_phishlet" "$domain_name"; then
+        echo "Failed to set $default_phishlet to "$domain_name"" >&2
+        exit 1
+    else
+        echo "Set phishlet '$default_phishlet' to domain "$domain_name" successfully."
+    fi
+
     # Enable the phishlet
     #sudo evilginx phishlets enable $default_phishlet
-    phishlets hostname "$default_phishlet" "$domain_name"
-    
+
     if ! phishlets enable "$default_phishlet"; then
         echo "Failed to enable phishlet: $default_phishlet" >&2
         exit 1
