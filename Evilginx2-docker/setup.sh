@@ -210,9 +210,6 @@ opsgenie_api_key=$(jq -r '.Opsgenie_API_Key' "$config_file")
 #Make the needed shared subirectories
 mkdir -p /shared-data/fresh-data /shared-data/used-data
 
-if [ -d "/root/.evilginx/EG2_DB" ]; then
-    rm -rf /root/.evilginx/EG2_DB
-fi
 # Start the Evilginx2 service in the background
 /bin/evilginx -p /app/phishlets/ -developer -debug &
 
