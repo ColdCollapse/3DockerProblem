@@ -29,7 +29,7 @@ RUN git clone https://github.com/BloodHoundAD/AzureHound.git ${GOPATH}/src/azure
 COPY ./Bobber-docker/3DP_Bobber.py /app/3DP_Bobber.py
 
 # Install required Python modules for Bobber
-RUN pip3 install --no-cache-dir \
+RUN pip3 install --no-cache-dir -v \
     colorama==0.4.6 \
     paramiko==3.3.1 \
     requests==2.31.0 \
