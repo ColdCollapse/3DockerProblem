@@ -33,7 +33,10 @@ services:
     networks:
       - mynetwork
     working_dir: /app
+    stdin_open: true
+    tty: true
     #command: ["/bin/sh", "-c", "mkdir -p /shared-data/fresh-data /shared-data/used-data"]
+    
 
   graphrunner:
     build:
