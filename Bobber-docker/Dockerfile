@@ -4,6 +4,7 @@ FROM golang:1.23 AS builder
 # Install Python dependencies
 RUN apt-get update && apt-get install -y \
     python3-pip \
+    python3 \ 
     wget \
     unzip \
     && rm -rf /var/lib/apt/lists/*
@@ -29,7 +30,7 @@ RUN git clone https://github.com/BloodHoundAD/AzureHound.git ${GOPATH}/src/azure
 COPY ./Bobber-docker/3DP_Bobber.py /app/3DP_Bobber.py
 
 # Install required Python modules for Bobber
-RUN pip3 install --no-cache-dir -v \
+RUN pip3 install --no-cache-dir --break-system-packages\
     colorama==0.4.6 \
     paramiko==3.3.1 \
     requests==2.31.0 \
