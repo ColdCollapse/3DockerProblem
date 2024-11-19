@@ -21,15 +21,14 @@ services:
     entrypoint: ["/bin/sh","/app/setup.sh"]
     stdin_open: true
     tty: true
-    
+
   bobber:
     build:
       context: .
       dockerfile: Bobber-docker/Dockerfile
-    image: ubuntu:latest  # Ubuntu base image for Bobber
     container_name: 3DP_Bobber
     volumes:
-      - shared-data:/shared-data  # Shared volume
+      - shared-data:/shared-data  # Correctly mounting the shared volume
     networks:
       - mynetwork
     working_dir: /app
