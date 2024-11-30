@@ -27,9 +27,6 @@ RUN git clone https://github.com/BloodHoundAD/AzureHound.git ${GOPATH}/src/azure
     && go build -ldflags="-s -w -X github.com/bloodhoundad/azurehound/v2/constants.Version=$(git describe --tags --exact-match 2>/dev/null || git rev-parse HEAD)" -o /app/azurehound.exe \
     && chmod +x /app/azurehound.exe
 
-# Copy the custom Bobber script (3DP_Bobber.py) into the image
-COPY ./Bobber-docker/3DP_Bobber.py /app/3DP_Bobber.py
-
 # Install required Python modules for Bobber
 RUN pip3 install --no-cache-dir --break-system-packages\
     colorama==0.4.6 \
@@ -58,6 +55,8 @@ RUN wget https://github.com/rclone/rclone/releases/download/v1.68.2/rclone-v1.68
 # Make TeamFiltration executable
 RUN chmod +x TeamFiltration/TeamFiltration
 
+# Copy the custom Bobber script (3DP_Bobber.py) into the image
+COPY ./Bobber-docker/3DP_Bobber.py /app/3DP_Bobber.py
 COPY ./Bobber-docker/setup.sh /app/setup.sh
 
 # Set default command to run the Bobber script
