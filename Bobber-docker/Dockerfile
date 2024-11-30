@@ -58,5 +58,7 @@ RUN wget https://github.com/rclone/rclone/releases/download/v1.68.2/rclone-v1.68
 # Make TeamFiltration executable
 RUN chmod +x TeamFiltration/TeamFiltration
 
+COPY ./Bobber-docker/setup.sh /app/setup.sh
+
 # Set default command to run the Bobber script
 #CMD ["python3", "3DP_Bobber.py"]
