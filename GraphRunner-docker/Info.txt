@@ -1,4 +1,6 @@
+This is a detail sheet of what this service provides and how it will function in the 3BP cycle.
 Because Bobber uses RoadTools RoadTX to pull the Access and Refresh Tokens we don't need to Auth upon receiving a new user file. 
+We be utilizing Invoke-GraphRunner as the first point of attack and then more granular attacks. 
 
 GraphRunner
 https://www.blackhillsinfosec.com/introducing-graphrunner/
