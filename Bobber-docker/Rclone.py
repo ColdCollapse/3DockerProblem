@@ -7,8 +7,8 @@ from watchdog.events import FileSystemEventHandler
 import subprocess
 
 # Rclone configuration
-RCLONE_REMOTE = "your_remote_name"  # Replace with your Rclone remote name
-RCLONE_DEST = "your_remote_path"   # Replace with your Rclone destination path
+RCLONE_REMOTE = "your_remote_name"  # Replace with your Rclone remote name, RCLONE_REMOTE = "my_google_drive"
+RCLONE_DEST = "your_remote_path"   # Replace with your Rclone destination path, RCLONE_DEST = "backup/fresh-data"
 
 # Directories to monitor
 DIRECTORIES_TO_MONITOR = [
