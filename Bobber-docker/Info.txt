@@ -5,5 +5,13 @@ High Level Overview:
 As in its namesake, Bobber, bounces when a fish bites performing Evilginx2 database monitoring with exfiltration automation.
 The additional operations surround how we monitor the EvilGinx2 DB. Depending on if the Evilginx docker is kept locally or remotely will impact how the script is run.  
 Depending on if the Evilginx docker is kept locally or remotely will impact how the script is run. 
-If both Dockers are on the local host 
-the remote it will monitor via SSH a user name
+
+Local Deployment:
+If both Dockers are on the local host, the script will monitor the EvilGinx2 DB and session.json in Shared_data volume for modification times to check for captured sessions.
+
+Remote Deploymnent
+the remote  will monitor the Evilginx docker, EvilGinx2 DB and session.json files via SSH using a username and password. When there has been a session captured and the files are modified, the seesions.json file will be downloaded to the Bobber Docker, with the name <REMOTEIP>_sessions.json and exploited.
+
+Once a session is captured, Bobber will utilize the RoadTools RoadTX library to retrieve the access and refresh tokens for the user, then optionally trigger TeamFiltration to exfiltrate or trigger AzureHound for further recon. If neither TeamFiltration or AzureHound is flagged for use these tokens will can be used by the subsequent Dockers such as Graphrunner, Graphpython remain unused
+
+Rclone has alseo been implemented for exfiltration of victim data to a third party location.
