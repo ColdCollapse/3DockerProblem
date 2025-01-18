@@ -3,5 +3,7 @@ Additional features and operations have been added to the original script to be 
 
 High Level Overview:
 As in its namesake, Bobber, bounces when a fish bites performing Evilginx2 database monitoring with exfiltration automation.
-The additional operations surround how we monitor the EvilGinx2 DB. As this is in a docker based system the script will monitor the file via a shared volume called shared_data.
-Depending on if the Evilginx docker is kept locally or remotely will impact how the script is run. If both Dockers are on the local host the remote it will monitor via SSH a user name
+The additional operations surround how we monitor the EvilGinx2 DB. Depending on if the Evilginx docker is kept locally or remotely will impact how the script is run.  
+Depending on if the Evilginx docker is kept locally or remotely will impact how the script is run. 
+If both Dockers are on the local host 
+the remote it will monitor via SSH a user name
